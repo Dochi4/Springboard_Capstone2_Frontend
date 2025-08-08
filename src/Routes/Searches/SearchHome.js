@@ -1,0 +1,114 @@
+import React, { useState } from "react";
+import { useNavigate, useLocation } from "react-router-dom";
+import { Card, CardBody, Button, ButtonGroup } from "reactstrap";
+import TitleSearch from "./TitleSearch";
+import DescriptionSearch from "./DescriptionSearch";
+import CoverSearch from "./CoverSearch";
+
+function SearchHome() {
+  const [searchType, setSearchType] = useState("title");
+  const location = useLocation();
+  const isHome = location.pathname === "/";
+
+  function renderSearchOption() {
+    switch (searchType) {
+      case "title":
+        return <TitleSearch />;
+      case "description":
+        return <DescriptionSearch />;
+      case "cover":
+        return <CoverSearch />;
+      default:
+        return <TitleSearch />;
+    }
+  }
+
+  const titleText = (
+    <Card className="mb-4 text-center p-4 shadow-sm h-100">
+      <CardBody>
+        <h4 className="card-title">Search by Title</h4>
+        <p className="card-text">
+          Simple and easy! Enter a book title and we’ll find matching results
+          based on your input.
+        </p>
+      </CardBody>
+    </Card>
+  );
+  const describeText = (
+    <Card className="mb-4 text-center p-4 shadow-sm">
+      <CardBody>
+        <h4 className="card-title">AI Description Recommendation</h4>
+        <p className="card-text">
+          Not sure what you're looking for? Just describe your ideal book—
+          genre, plot, vibe—and our AI will find great matches and explain why
+          they fit you.
+        </p>
+      </CardBody>
+    </Card>
+  );
+  const coverText = (
+    <Card className="mb-4 text-center p-4 shadow-sm">
+      <CardBody>
+        <h4 className="card-title">AI Cover-Based Search</h4>
+        <p className="card-text">
+          Remember how the book looked? Describe the cover—colors, images,
+          text—and our AI will find books that visually match. Or explain why
+          fits.
+        </p>
+      </CardBody>
+    </Card>
+  );
+
+  function renderTextOption() {
+    switch (searchType) {
+      case "title":
+        return titleText;
+      case "description":
+        return describeText;
+      case "cover":
+        return coverText;
+      default:
+        return titleText;
+    }
+  }
+
+  return (
+    <div className="col-md-8 mx-auto my-4">
+      {renderSearchOption()}
+
+      <ButtonGroup className="mb-3">
+        <Button
+          onClick={() => setSearchType("title")}
+          style={{
+            backgroundColor: searchType === "title" ? "#E69500" : "#634612ff",
+            border: "1px solid black",
+          }}
+        >
+          Title
+        </Button>
+        <Button
+          onClick={() => setSearchType("description")}
+          style={{
+            backgroundColor:
+              searchType === "description" ? "#7e3eddff" : "#321d58ff",
+            border: "1px solid black",
+          }}
+        >
+          Description
+        </Button>
+        <Button
+          onClick={() => setSearchType("cover")}
+          style={{
+            backgroundColor: searchType === "cover" ? "#0ed629ff" : "#024b14ff",
+            border: "1px solid black",
+          }}
+        >
+          Cover
+        </Button>
+      </ButtonGroup>
+
+      {isHome && renderTextOption()}
+    </div>
+  );
+}
+export default SearchHome;
