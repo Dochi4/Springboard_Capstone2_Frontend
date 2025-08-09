@@ -17,7 +17,7 @@ class NewBookApi {
   static async checkConnection() {
     try {
       const res = await axios.get(`${BASE_URL}/ping`);
-      return (res.data.message = "Connected to Backend");
+      return res.data.message;
     } catch (err) {
       console.error("Backend Connection Check Failed:", err);
       return false;
