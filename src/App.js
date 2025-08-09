@@ -16,10 +16,6 @@ export const CurrentUserContext = createContext({
   setCurrentUser: () => {},
 });
 
-export const AppliedContext = createContext({
-  applied: false,
-  setApplied: () => {},
-});
 // ------------------------------------
 
 function App() {
