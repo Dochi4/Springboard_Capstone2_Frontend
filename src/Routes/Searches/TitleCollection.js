@@ -3,7 +3,7 @@ import { useParams } from "react-router-dom";
 import NewBookApi from "../../NewBookApi";
 import BookCard from "../Books/BookCard";
 import Loading from "../Loading";
-import { Card, CardBody,Button } from "reactstrap";
+import { Card, CardBody, Button } from "reactstrap";
 
 function TitleCollection() {
   const { query } = useParams();
@@ -11,29 +11,29 @@ function TitleCollection() {
   const [error, setError] = useState("");
   const [isLoading, setIsLoading] = useState(true);
 
-  useEffect(() => {
-    async function fetchBooksFromUrl() {
-      if (!query) return;
+  async function fetchBooksFromUrl() {
+    if (!query) return;
+    setIsLoading(true);
+    const searchObject = { query: query.trim(), maxResults: 15 };
+    const booksData = await NewBookApi.getBookbyTitle(searchObject);
 
-      const searchObject = { query: query.trim(), maxResults: 15 };
-      const booksData = await NewBookApi.getBookbyTitle(searchObject);
-
-      if (!booksData || booksData.length === 0) {
-        setError("No results found.");
-        setBooks([]);
-        return;
-      }
-
-      setBooks(booksData);
-      setError("");
-      setIsLoading(false);
+    if (!booksData || booksData.length === 0) {
+      setError("No results found.");
+      setBooks([]);
+      return;
     }
 
+    setBooks(booksData);
+    setError("");
+    setIsLoading(false);
+  }
+
+  useEffect(() => {
     fetchBooksFromUrl();
   }, [query]);
 
   const reloader = () => {
-    window.location.reload();
+    fetchBooksFromUrl();
   };
   return (
     <Card className="my-3 border-0 shadow-sm">

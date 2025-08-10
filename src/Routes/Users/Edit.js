@@ -10,12 +10,14 @@ import {
   Button,
 } from "reactstrap";
 import { useNavigate, useParams } from "react-router-dom";
+import Loading from "../Loading";
 
 function Edit({ handleEditUser }) {
   const { username } = useParams();
   console.log("username from useParams:", username);
   const navigate = useNavigate();
   const [passVis, setPassVis] = useState(false);
+  const [isLoading, setIsLoading] = useState(false);
 
   const [formData, setformData] = useState({
     password: "",
@@ -54,9 +56,12 @@ function Edit({ handleEditUser }) {
       return;
     }
     try {
+      setIsLoading(true);
       handleEditUser(username, formData);
+      setIsLoading(false);
       navigate(`/profile/${username}`);
     } catch (err) {
+      setIsLoading(false);
       console.error("Edit failed:", err);
       setError(err.response?.data?.error || "Something went wrong.");
     }
@@ -66,6 +71,7 @@ function Edit({ handleEditUser }) {
     <div className="col-md-8 mx-auto my-4">
       <Card className="border rounded shadow-sm">
         <CardBody>
+          {isLoading && <Loading context={`Editing: ${formData.firstName}`} />}
           <CardTitle className="font-weight-bold text-center fs-4 mb-4">
             Edit {username} Profile
           </CardTitle>

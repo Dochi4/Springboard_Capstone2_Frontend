@@ -12,8 +12,9 @@ function DescriptCollection() {
   const [error, setError] = useState("");
   const [isLoading, setIsLoading] = useState(true);
 
-  useEffect(() => {
-    async function getRecommendationsAndBooks() {
+  async function getRecommendationsAndBooks() {
+    if (userSearch) {
+      setIsLoading(true);
       try {
         // Step 1: Get AI-based recommendations
         const descriptRes = await NewBookApi.recoUserDescript(userSearch);
@@ -60,15 +61,14 @@ function DescriptCollection() {
         setIsLoading(false);
       }
     }
+  }
 
-    if (userSearch) {
-      setIsLoading(true);
-      getRecommendationsAndBooks();
-    }
+  useEffect(() => {
+    getRecommendationsAndBooks();
   }, [userSearch]);
 
   const reloader = () => {
-    window.location.reload();
+    getRecommendationsAndBooks();
   };
 
   return (

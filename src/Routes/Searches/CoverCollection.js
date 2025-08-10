@@ -12,8 +12,9 @@ function CoverCollection() {
   const [error, setError] = useState("");
   const [isLoading, setIsLoading] = useState(true);
 
-  useEffect(() => {
-    async function getRecommendationsAndBooks() {
+  async function getRecommendationsAndBooks() {
+    if (userSearch) {
+      setIsLoading(true);
       try {
         // Step 1: Get AI-based recommendations
         const descriptRes = await NewBookApi.recoUserCover(userSearch);
@@ -60,15 +61,16 @@ function CoverCollection() {
         setIsLoading(false);
       }
     }
-    if (userSearch) {
-      setIsLoading(true);
-      getRecommendationsAndBooks();
-    }
+  }
+
+  useEffect(() => {
+    getRecommendationsAndBooks();
   }, [userSearch]);
 
   const reloader = () => {
-    window.location.reload();
+    getRecommendationsAndBooks();
   };
+  
   return (
     <Card className="my-3 border-0 shadow-sm">
       {isLoading && <Loading context="Getting Books By Your Cover" />}
