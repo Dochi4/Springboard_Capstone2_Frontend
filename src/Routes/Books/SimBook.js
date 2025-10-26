@@ -19,58 +19,59 @@ function SimBook() {
   const [error, setError] = useState("");
   const [isLoading, setIsLoading] = useState(true);
 
-  useEffect(() => {
-    async function getRecommendationsAndBooks() {
-      try {
-        // Step 1: Get AI-based recommendations
-        console.log("REF Book:", refBook);
+  async function getRecommendationsAndBooks() {
+    try {
+      // Step 1: Get AI-based recommendations
+      console.log("REF Book:", refBook);
 
-        const descriptRes = await NewBookApi.recoSimBook(refBook);
-        const recommendations = descriptRes.Recommendations;
+      const descriptRes = await NewBookApi.recoSimBook(refBook);
+      const recommendations = descriptRes.Recommendations;
 
-        console.log("Recomendations SimBook:", recommendations);
+      console.log("Recomendations SimBook:", recommendations);
 
-        if (!recommendations || recommendations.length === 0) {
-          setError("No results found.");
+      if (!recommendations || recommendations.length === 0) {
+        setError("No results found.");
 
-          setBooks([]);
-          return;
-        }
-        setError("");
-
-        // Step 2: Fetch book details for each
-        const booksData = await Promise.all(
-          recommendations.map((result) =>
-            NewBookApi.getBookbyTitle({ query: result.title, maxResults: 1 })
-          )
-        );
-
-        // Step 3: Attach reason to each correspondingbook result
-        const booksWithReasons = booksData.map((bookArray, idx) => {
-          const actualBook =
-            bookArray && bookArray.length > 0 ? bookArray[0] : {};
-
-          return {
-            ...actualBook,
-            reason: recommendations[idx].reason,
-          };
-        });
-
-        if (!booksData || booksData.length === 0) {
-          setError("No book details found.");
-          setBooks([]);
-          return;
-        }
-
-        setBooks(booksWithReasons);
-      } catch (err) {
-        console.error("API Error:", err);
-        setError("An error occurred. Please try again.");
         setBooks([]);
-      } finally {
-        setIsLoading(false);
+        return;
       }
+      setError("");
+
+      // Step 2: Fetch book details for each
+      const booksData = await Promise.all(
+        recommendations.map((result) =>
+          NewBookApi.getBookbyTitle({ query: result.title, maxResults: 1 })
+        )
+      );
+
+      // Step 3: Attach reason to each correspondingbook result
+      const booksWithReasons = booksData.map((bookArray, idx) => {
+        const actualBook =
+          bookArray && bookArray.length > 0 ? bookArray[0] : {};
+
+        return {
+          ...actualBook,
+          reason: recommendations[idx].reason,
+        };
+      });
+
+      if (!booksData || booksData.length === 0) {
+        setError("No book details found.");
+        setBooks([]);
+        return;
+      }
+
+      setBooks(booksWithReasons);
+    } catch (err) {
+      console.error("API Error:", err);
+      setError("An error occurred. Please try again.");
+      setBooks([]);
+    } finally {
+      setIsLoading(false);
     }
+  }
+
+  useEffect(() => {
     if (refBook) {
       setIsLoading(true);
       getRecommendationsAndBooks();
@@ -78,7 +79,10 @@ function SimBook() {
   }, [refBook]);
 
   const reloader = () => {
-    window.location.reload();
+    if (refBook) {
+      setIsLoading(true);
+      getRecommendationsAndBooks();
+    }
   };
   return (
     <div className="min-vh-100 p-4">

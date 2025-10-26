@@ -4,6 +4,8 @@ import NavBar from "./Routes/NavBar";
 import RouteList from "./Routes/RouteList";
 import NewBookApi from "./NewBookApi";
 import { jwtDecode } from "jwt-decode";
+import "./css/styles.css";
+import BottomBar from "./Routes/BottomBar.js";
 
 // Contexts ---------------------------
 export const IsLogInContext = createContext({
@@ -71,18 +73,23 @@ function App() {
   };
 
   return (
-    <div>
+    <div className="app-container">
       <BrowserRouter>
         <IsLogInContext.Provider value={{ isLogIn, setIsLogIn }}>
           <CurrentUserContext.Provider value={{ currentUser, setCurrentUser }}>
-            <NavBar handleLogout={handleLogout} />
-            <main>
+            <header>
+              <NavBar handleLogout={handleLogout} />
+            </header>
+            <main className="main-content">
               <RouteList
                 handleLogin={handleLogin}
                 handleSignUp={handleSignUp}
                 handleEditUser={handleEditUser}
               />
             </main>
+            <footer className="bottom-bar">
+              <BottomBar />
+            </footer>
           </CurrentUserContext.Provider>
         </IsLogInContext.Provider>
       </BrowserRouter>

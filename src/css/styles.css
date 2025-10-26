@@ -1,0 +1,28 @@
+html, body, #root {
+  height: 100%;
+  margin: 0;
+  
+}
+
+.app-container {
+  display: flex;
+  flex-direction: column;
+  min-height: 100vh; /* ensures full screen height */
+}
+
+.main-content {
+  flex: 1; /* this pushes the footer down */
+}
+
+/* Footer (your bottom bar) */
+.bottom-bar {
+  background-color: #424242;
+  color: white;
+  padding: 10px;
+  justify-content: center;
+  align-items: center;
+  text-align: center;
+}
+
+
+

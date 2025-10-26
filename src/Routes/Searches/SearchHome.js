@@ -1,6 +1,6 @@
 import React, { useState } from "react";
-import { useNavigate, useLocation } from "react-router-dom";
-import { Card, CardBody, Button, ButtonGroup } from "reactstrap";
+import { useLocation } from "react-router-dom";
+import { Card, CardBody, Button } from "reactstrap";
 import TitleSearch from "./TitleSearch";
 import DescriptionSearch from "./DescriptionSearch";
 import CoverSearch from "./CoverSearch";
@@ -76,7 +76,10 @@ function SearchHome() {
     <div className="col-md-8 mx-auto my-4">
       {renderSearchOption()}
 
-      <ButtonGroup className="mb-3">
+      <div
+        className="col-md-8 mx-auto my-4"
+        style={{ display: "flex", justifyContent: "center", gap: "10px" }}
+      >
         <Button
           onClick={() => setSearchType("title")}
           style={{
@@ -85,7 +88,7 @@ function SearchHome() {
           }}
         >
           Title
-        </Button>
+        </Button>{" "}
         <Button
           onClick={() => setSearchType("description")}
           style={{
@@ -95,7 +98,7 @@ function SearchHome() {
           }}
         >
           Description
-        </Button>
+        </Button>{" "}
         <Button
           onClick={() => setSearchType("cover")}
           style={{
@@ -105,8 +108,7 @@ function SearchHome() {
         >
           Cover
         </Button>
-      </ButtonGroup>
-
+      </div>
       {isHome && renderTextOption()}
     </div>
   );
