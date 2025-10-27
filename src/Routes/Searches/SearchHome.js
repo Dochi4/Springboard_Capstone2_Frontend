@@ -28,8 +28,7 @@ function SearchHome() {
       <CardBody>
         <h4 className="card-title">Search by Title</h4>
         <p className="card-text">
-          Simple and easy! Enter a book title and we’ll find matching results
-          based on your input.
+          Find your book by its title! Type in the name of the book you’re looking for, select it from the results, and then use “Recommend Similar Books” to let our AI suggest titles that match your taste.
         </p>
       </CardBody>
     </Card>
@@ -39,9 +38,7 @@ function SearchHome() {
       <CardBody>
         <h4 className="card-title">AI Description Recommendation</h4>
         <p className="card-text">
-          Not sure what you're looking for? Just describe your ideal book—
-          genre, plot, vibe—and our AI will find great matches and explain why
-          they fit you.
+          Describe your ideal book! Genre, plot, mood, or vibe and our AI will suggest titles that match your preferences, along with explanations of why they’re a great fit.
         </p>
       </CardBody>
     </Card>
@@ -49,11 +46,9 @@ function SearchHome() {
   const coverText = (
     <Card className="mb-4 text-center p-4 shadow-sm">
       <CardBody>
-        <h4 className="card-title">AI Cover-Based Search</h4>
+        <h4 className="card-title">AI Cover Based Search</h4>
         <p className="card-text">
-          Remember how the book looked? Describe the cover—colors, images,
-          text—and our AI will find books that visually match. Or explain why
-          fits.
+          Describe your ideal book cover colors, images, or text, and our AI will suggest books that match your vision. It may explain why a match fits, since it can’t actually see the covers.
         </p>
       </CardBody>
     </Card>
